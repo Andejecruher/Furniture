@@ -1,0 +1,61 @@
+---
+import CategoryCard from '../common/CategoryCard.astro';
+
+const categories = [
+  {
+    id: 'living-room',
+    title: 'Sala de Estar',
+    description: 'Sofás, sillones y mesas de centro',
+    image: '/placeholder.svg?height=400&width=600',
+    itemCount: 45
+  },
+  {
+    id: 'bedroom',
+    title: 'Dormitorio',
+    description: 'Camas, armarios y mesitas de noche',
+    image: '/placeholder.svg?height=400&width=600',
+    itemCount: 38
+  },
+  {
+    id: 'dining-room',
+    title: 'Comedor',
+    description: 'Mesas, sillas y aparadores',
+    image: '/placeholder.svg?height=400&width=600',
+    itemCount: 29
+  },
+  {
+    id: 'office',
+    title: 'Oficina',
+    description: 'Escritorios, sillas de oficina y libreros',
+    image: '/placeholder.svg?height=400&width=600',
+    itemCount: 24
+  }
+];
+---
+
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">Explora Nuestras Categorías</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Descubre nuestra amplia selección de muebles organizados por espacios para hacer más fácil tu búsqueda del mobiliario perfecto.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {categories.map(category => (
+        <CategoryCard {...category} />
+      ))}
+    </div>
+
+    <div class="text-center mt-12">
+      <a 
+        href="/categorias" 
+        class="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-md transition-colors duration-300"
+      >
+        Ver Todas las Categorías
+      </a>
+    </div>
+  </div>
+</section>
+

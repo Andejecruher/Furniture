@@ -1,16 +1,60 @@
 ---
-import "../styles/global.css";
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import FeaturedProducts from '../components/sections/FeaturedProducts.astro';
+import CategoryShowcase from '../components/sections/CategoryShowcase.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Newsletter from '../components/sections/Newsletter.astro';
+
+// Datos de ejemplo para productos destacados
+const featuredProducts = [
+  {
+    id: "sofa-1",
+    name: "Sofá Moderno de 3 Plazas",
+    description: "Sofá elegante y cómodo para tu sala de estar",
+    price: 899.99,
+    discount: 10,
+    category: "Sofás",
+    imageUrl: "/images/furniture/sofa-1.jpg",
+    inStock: true,
+    features: ["Tapizado de alta calidad", "Estructura de madera sólida", "Cojines extraíbles"],
+    dimensions: {
+      width: 220,
+      height: 85,
+      depth: 95,
+      unit: "cm"
+    },
+    materials: ["Algodón", "Madera de pino", "Espuma de alta densidad"],
+    colors: ["Gris", "Azul", "Beige"]
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa de centro elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 0,
+    category: "Mesas",
+    imageUrl: "/images/furniture/table-1.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm"
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"]
+  },
+  // Puedes añadir más productos aquí
+];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} >
-    <title>Astro</title>
-  </head>
-  <body>
-   <h1 class="text-3xl font-bold underline">  Hello world!</h1>
-  </body>
-</html>
+<MainLayout title="Inicio">
+  <Hero />
+  <FeaturedProducts title="Productos Destacados" products={featuredProducts} />
+  <CategoryShowcase />
+  <Testimonials />
+  <Newsletter />
+</MainLayout>
+

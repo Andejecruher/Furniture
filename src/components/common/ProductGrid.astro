@@ -1,0 +1,85 @@
+---
+import type { FurnitureProduct } from '../../types/furniture';
+import ProductCard from '../furniture/ProductCard.astro';
+
+interface Props {
+  products: FurnitureProduct[];
+  columns?: 2 | 3 | 4;
+  showPagination?: boolean;
+  currentPage?: number;
+  totalPages?: number;
+}
+
+const { 
+  products, 
+  columns = 3, 
+  showPagination = false, 
+  currentPage = 1, 
+  totalPages = 1 
+} = Astro.props;
+
+const getColumnsClass = (cols: number) => {
+  switch (cols) {
+    case 2:
+      return 'sm:grid-cols-2';
+    case 3:
+      return 'sm:grid-cols-2 lg:grid-cols-3';
+    case 4:
+      return 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+    default:
+      return 'sm:grid-cols-2 lg:grid-cols-3';
+  }
+};
+---
+
+<div class="space-y-8">
+  <!-- Grid de productos -->
+  <div class={`grid grid-cols-1 ${getColumnsClass(columns)} gap-6`}>
+    {products.map(product => (
+      <ProductCard product={product} />
+    ))}
+  </div>
+
+  <!-- Paginación -->
+  {showPagination && totalPages > 1 && (
+    <div class="flex justify-center items-center space-x-2 mt-8">
+      <a
+        href={`?page=${currentPage - 1}`}
+        class={`px-4 py-2 rounded-md transition-colors duration-300 ${
+          currentPage === 1
+            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            : 'bg-white text-gray-700 hover:bg-gray-50'
+        }`}
+        aria-disabled={currentPage === 1}
+      >
+        Anterior
+      </a>
+
+      {Array.from({ length: totalPages }).map((_, index) => (
+        <a
+          href={`?page=${index + 1}`}
+          class={`px-4 py-2 rounded-md transition-colors duration-300 ${
+            currentPage === index + 1
+              ? 'bg-amber-600 text-white'
+              : 'bg-white text-gray-700 hover:bg-gray-50'
+          }`}
+        >
+          {index + 1}
+        </a>
+      ))}
+
+      <a
+        href={`?page=${currentPage + 1}`}
+        class={`px-4 py-2 rounded-md transition-colors duration-300 ${
+          currentPage === totalPages
+            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            : 'bg-white text-gray-700 hover:bg-gray-50'
+        }`}
+        aria-disabled={currentPage === totalPages}
+      >
+        Siguiente
+      </a>
+    </div>
+  )}
+</div>
+

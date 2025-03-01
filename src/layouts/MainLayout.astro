@@ -1,0 +1,94 @@
+---
+import "../styles/global.css";
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Tienda de muebles de alta calidad" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} | Furniture Store</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    
+    <main class="flex-grow">
+      <slot />
+    </main>
+    
+    <Footer />
+    
+    <!-- Script para manejar el carrito de compras -->
+    <script>
+      // Aquí puedes añadir lógica global del carrito
+      class ShoppingCart {
+        items: {id: string, quantity: number}[] = [];
+        
+        constructor() {
+          // Cargar carrito desde localStorage si existe
+          const savedCart = localStorage.getItem('furniture-cart');
+          if (savedCart) {
+            this.items = JSON.parse(savedCart);
+          }
+        }
+        
+        addItem(productId: string, quantity: number = 1) {
+          const existingItem = this.items.find(item => item.id === productId);
+          
+          if (existingItem) {
+            existingItem.quantity += quantity;
+          } else {
+            this.items.push({ id: productId, quantity });
+          }
+          
+          this.saveCart();
+          this.updateCartUI();
+        }
+        
+        removeItem(productId: string) {
+          this.items = this.items.filter(item => item.id !== productId);
+          this.saveCart();
+          this.updateCartUI();
+        }
+        
+        saveCart() {
+          localStorage.setItem('furniture-cart', JSON.stringify(this.items));
+        }
+        
+        updateCartUI() {
+          const cartCount = document.getElementById('cart-count');
+          if (cartCount) {
+            const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems.toString();
+          }
+        }
+      }
+      
+      // Inicializar el carrito y hacerlo disponible globalmente
+      window.furnitureCart = new ShoppingCart();
+      window.furnitureCart.updateCartUI();
+    </script>
+  </body>
+</html>
+
+<script>
+  // Declaración para TypeScript
+  declare global {
+    interface Window {
+      furnitureCart: any;
+    }
+  }
+</script>
+
