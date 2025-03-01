@@ -1,1 +1,183 @@
 @import "tailwindcss";
+
+/* src/styles/global.css */
+@font-face {
+  font-family: "Eudoxus Sans";
+  src: url("../assets/fonts/EudoxusSans-Regular.woff2") format("woff2"),
+    url("../assets/fonts/EudoxusSans-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Eudoxus Sans";
+  src: url("../assets/fonts/EudoxusSans-Bold.woff2") format("woff2"),
+    url("../assets/fonts/EudoxusSans-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Headings / H1 - H5 */
+h1 {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h2 {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h3 {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h4 {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h5 {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+/* Label / L1 -  L3 */
+label {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%; /* 23.4px */
+}
+
+label.l2 {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%; /* 20.8px */
+}
+
+label.l3 {
+  color: rgba(21, 20, 17, 0.8);
+  font-family: "Eudoxus Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%; /* 18.2px */
+}
+
+/* Paragraph / P1 - P4 */
+p {
+  color: rgba(21, 20, 17, 0.8);
+
+  /* Paragraph/P3 - 18 Medium */
+  font-family: "Eudoxus Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 180%; /* 32.4px */
+}
+
+p.p2 {
+  color: rgba(21, 20, 17, 0.8);
+
+  /* Paragraph/P2 - 16 Medium */
+  font-family: "Eudoxus Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 180%; /* 28.8px */
+}
+
+p.p3 {
+  color: rgba(21, 20, 17, 0.8);
+
+  /* Paragraph/P1 - 14 Medium */
+  font-family: "Eudoxus Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 180%; /* 25.2px */
+}
+
+@theme {
+  /* Font */
+  --font-body: "Eudoxus Sans", sans-serif;
+  --font-color: #000;
+  --font-exodus: "Eudoxus Sans", sans-serif;
+
+  /* Colors */
+
+  --color-primary-50: #f5f8f8;
+  --color-primary-100: #dcebe8;
+  --color-primary-200: #b9d6d1;
+  --color-primary-300: #8fb9b4;
+  --color-primary-400: #679a95;
+  --color-primary-500: #518581;
+  --color-primary-600: #3c6562;
+  --color-primary-700: #335251;
+  --color-primary-800: #2c4343;
+  --color-primary-900: #283939;
+  --color-primary-950: #132020;
+
+  --color-secondary-50: #fff8eb;
+  --color-secondary-100: #ffeac6;
+  --color-secondary-200: #ffd388;
+  --color-secondary-300: #ffb23f;
+  --color-secondary-400: #ff9c20;
+  --color-secondary-500: #f97707;
+  --color-secondary-600: #dd5202;
+  --color-secondary-700: #b73506;
+  --color-secondary-800: #94280c;
+  --color-secondary-900: #7a230d;
+  --color-secondary-950: #460f02;
+
+  --color-title-50: #f7f7f6;
+  --color-title-100: #e6e4e1;
+  --color-title-200: #cdc9c2;
+  --color-title-300: #ada69b;
+  --color-title-400: #8b8376;
+  --color-title-500: #70695c;
+  --color-title-600: #595348;
+  --color-title-700: #49453c;
+  --color-title-800: #3c3a33;
+  --color-title-900: #34322d;
+  --color-title-950: #151411;
+
+  --color-paragraph-50: #f6f6f7;
+  --color-paragraph-100: #efeff0;
+  --color-paragraph-200: #e2e1e4;
+  --color-paragraph-300: #ceced3;
+  --color-paragraph-400: #bab9c0;
+  --color-paragraph-500: #afadb5;
+  --color-paragraph-600: #93919a;
+  --color-paragraph-700: #7f7d85;
+  --color-paragraph-800: #68666d;
+  --color-paragraph-900: #56555a;
+  --color-paragraph-950: #333234;
+}

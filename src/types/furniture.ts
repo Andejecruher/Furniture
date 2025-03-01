@@ -8,12 +8,13 @@ export interface FurnitureProduct {
   imageUrl: string;
   inStock: boolean;
   features: string[];
-  dimensions?: {
+  dimensions: {
     width: number;
     height: number;
     depth: number;
-    unit: "cm" | "in";
+    unit: string;
   };
   materials: string[];
   colors: string[];
+  // Ensure all properties match the expected type
 }
