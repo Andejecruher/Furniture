@@ -3,18 +3,28 @@
 /* src/styles/global.css */
 @font-face {
   font-family: "Eudoxus Sans";
-  src: url("../assets/fonts/EudoxusSans-Regular.woff2") format("woff2"),
-    url("../assets/fonts/EudoxusSans-Regular.otf") format("opentype");
+  src: url("../assets/fonts/Eudoxus-Sans-font/EudoxusSans-Regular.woff2")
+      format("woff2"),
+    url("../assets/fonts/Eudoxus-Sans-font/EudoxusSans-Regular.ttf")
+      format("opentype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Eudoxus Sans";
-  src: url("../assets/fonts/EudoxusSans-Bold.woff2") format("woff2"),
-    url("../assets/fonts/EudoxusSans-Bold.otf") format("opentype");
+  src: url("../assets/fonts/Eudoxus-Sans-font/EudoxusSans-Bold.woff2")
+      format("woff2"),
+    url("../assets/fonts/Eudoxus-Sans-font/EudoxusSans-Bold.ttf")
+      format("opentype");
   font-weight: 700;
   font-style: normal;
+}
+
+/* src/styles/global.css */
+body {
+  font-family: "Eudoxus Sans", sans-serif;
+  font-weight: 400;
 }
 
 /* Headings / H1 - H5 */
@@ -93,8 +103,6 @@ label.l3 {
 
 /* Paragraph / P1 - P4 */
 p {
-  color: rgba(21, 20, 17, 0.8);
-
   /* Paragraph/P3 - 18 Medium */
   font-family: "Eudoxus Sans";
   font-size: 18px;
@@ -104,8 +112,6 @@ p {
 }
 
 p.p2 {
-  color: rgba(21, 20, 17, 0.8);
-
   /* Paragraph/P2 - 16 Medium */
   font-family: "Eudoxus Sans";
   font-size: 16px;
@@ -115,8 +121,6 @@ p.p2 {
 }
 
 p.p3 {
-  color: rgba(21, 20, 17, 0.8);
-
   /* Paragraph/P1 - 14 Medium */
   font-family: "Eudoxus Sans";
   font-size: 14px;
