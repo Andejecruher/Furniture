@@ -7,8 +7,46 @@ const { id } = Astro.params;
 
 // En un caso real, buscarías el producto en una base de datos o API
 // Aquí simulamos la búsqueda
-const allProducts: FurnitureProduct[] = [
-  // Aquí irían todos los productos
+const allProducts: FurnitureProduct[] =[
+  {
+    id: "sofa-1",
+    name: "Sofá Moderno de 3 Plazas",
+    description: "Sofá elegante y cómodo para tu sala de estar",
+    price: 899.99,
+    discount: 10,
+    category: "Sofás",
+    imageUrl: "https://via.placeholder.com/400",
+    inStock: true,
+    features: ["Tapizado de alta calidad", "Estructura de madera sólida", "Cojines extraíbles"],
+    dimensions: {
+      width: 220,
+      height: 85,
+      depth: 95,
+      unit: "cm"
+    },
+    materials: ["Algodón", "Madera de pino", "Espuma de alta densidad"],
+    colors: ["Gris", "Azul", "Beige"]
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa de centro elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 0,
+    category: "Mesas",
+    imageUrl: "/images/furniture/table-1.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm"
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"]
+  },
+  // Puedes añadir más productos aquí
 ];
 
 const product = allProducts.find(p => p.id === id);
@@ -82,10 +120,6 @@ const relatedProducts = allProducts
               <span class="ml-2 text-lg line-through text-gray-500">${product.price.toFixed(2)}</span>
               <span class="ml-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold">
                 {product.discount}% OFF
-              </span>
-            </div>
-          ) : (
-            <span class="  OFF
               </span>
             </div>
           ) : (
