@@ -1,9 +1,10 @@
 ---
-import logo from "@/assets/icons/logo.svg?url";
-import lalasia from "@/assets/icons/lalasia.svg?url";
+import { Image } from "astro:assets";
+import logo from "@/assets/icons/logo.svg";
+import lalasia from "@/assets/icons/lalasia.svg";
 ---
 
 <a href="/" class="flex items-center">
-  <img src={logo} alt="Logo" class="h-11 w-auto" />
-  <img src={lalasia} alt="Lalasia" class="h-4 w-auto" />
+  <Image src={logo} alt="Logo" class="h-11 w-auto" />
+  <Image src={lalasia} alt="Lalasia" class="h-4 w-auto" />
 </a>

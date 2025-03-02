@@ -1,0 +1,35 @@
+---
+// Search.astro
+---
+
+<div
+  class="flex items-center p-4 h-20 w-full max-w-3xl mx-auto border border-gray-300 overflow-hidden shadow-sm"
+>
+  <div class="flex items-center justify-center pl-3">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-8 w-8 text-gray-400"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+  </div>
+  <input
+    type="text"
+    placeholder="Search property"
+    class="flex-grow px-4 py-2 focus:outline-none"
+  />
+  <button
+    class="bg-primary-500 text-white px-4 py-2 font-medium hover:bg-primary/90 transition-colors w-44 h-14"
+  >
+    Search
+  </button>
+</div>

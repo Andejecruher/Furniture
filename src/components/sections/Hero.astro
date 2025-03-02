@@ -1,62 +1,47 @@
 ---
-
+import { Image } from "astro:assets";
+import Search from "@/components/common/Search.astro";
+import backgroundImage from "@/assets/background/d24fd0d1378b3507747589160daab7b7.png";
+import PlusWinkFilled from "@/assets/icons/plus-wink-filled.svg";
+import SketchAnnotation from "@/assets/icons/sketch-annotation.svg";
 ---
 
-<section class="relative bg-gray-900 text-white">
-  <!-- Imagen de fondo con overlay -->
-  <div class="absolute inset-0 z-0">
-    <img
-      src="/placeholder.svg?height=800&width=1920"
-      alt="Modern living room"
-      class="w-full h-full object-cover opacity-50"
-    />
-    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-900/50"></div>
-  </div>
-
-  <!-- Contenido -->
-  <div class="relative z-10 container mx-auto px-4 py-24 lg:py-32">
-    <div class="max-w-2xl">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-        Diseña el hogar de tus sueños
-      </h1>
-      <p class="text-lg md:text-xl text-gray-200 mb-8">
-        Descubre nuestra colección de muebles de diseño exclusivo. Calidad excepcional y estilo único para transformar tu espacio.
+<section class="container mx-auto">
+  <!-- Title and Paragraph -->
+  <div class="relative container mx-auto px-4 py-8 lg:py-20">
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="relative text-2xl lg:text-5xl font-extrabold text-title-950">
+        Discover Furniture With High Quality Wood
+        <Image
+          src={PlusWinkFilled}
+          alt="PlusWinkFilled"
+          class="absolute right-2 top-8 w-6 h-6 lg:right-30 lg:top-12 lg:w-14 lg:h-14 object-cover"
+        />
       </p>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a 
-          href="/productos" 
-          class="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-md transition-colors duration-300"
-        >
-          Explorar Colección
-        </a>
-        <a 
-          href="/categorias" 
-          class="inline-flex items-center justify-center bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-md transition-colors duration-300"
-        >
-          Ver Categorías
-        </a>
-      </div>
+      <p class="mt-6 text-sm lg:text-lg text-paragraph-500">
+        Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim
+        placerat nisi, adipiscing mauris non. Purus parturient viverra nunc,
+        tortor sit laoreet. Quam tincidunt aliquam adipiscing tempor.
+      </p>
+      <Image
+        src={SketchAnnotation}
+        alt="SketchAnnotation"
+        class="absolute top-10 -left-5 w-24 h-24 lg:bottom-0 lg:left-0 xl:left-15 lg:w-96 lg:h-96 object-cover"
+      />
     </div>
   </div>
 
-  <!-- Indicadores de características -->
-  <div class="relative z-10 bg-gray-900/80 py-6">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div>
-          <div class="font-semibold mb-1">Envío Gratis</div>
-          <p class="text-gray-300 text-sm">En pedidos superiores a $500</p>
-        </div>
-        <div>
-          <div class="font-semibold mb-1">Garantía de 2 Años</div>
-          <p class="text-gray-300 text-sm">En todos nuestros productos</p>
-        </div>
-        <div>
-          <div class="font-semibold mb-1">Devolución Gratuita</div>
-          <p class="text-gray-300 text-sm">30 días para cambios y devoluciones</p>
-        </div>
+  <!-- Search -->
+  <div class="z-10 container mx-auto px-4 py-24 lg:py-32">
+    <div class="relative max-w-auto mx-auto text-center">
+      <div class="absolute -top-10 left-2/6 max-w-2xl mx-auto z-50">
+        <Search />
       </div>
+      <Image
+        src={backgroundImage}
+        alt="Modern living room"
+        class="w-full h-full object-cover"
+      />
     </div>
   </div>
 </section>
-
