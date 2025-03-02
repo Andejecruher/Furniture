@@ -1,72 +1,74 @@
 ---
+import Logo from "@/components/common/Logo.astro";
+import bag2 from "@/assets/icons/bag-2.svg?url";
+import user from "@/assets/icons/user.svg?url";
+import menu from "@/assets/icons/menu.svg?url";
+
 // Datos para el menú de navegación
 const navItems = [
-  { label: "Inicio", url: "/" },
-  { label: "Productos", url: "/productos" },
-  { label: "Categorías", url: "/categorias" },
-  { label: "Ofertas", url: "/ofertas" },
-  { label: "Contacto", url: "/contacto" }
+  { label: "Product", url: "/products" },
+  { label: "Services", url: "/services" },
+  { label: "Article", url: "/article" },
+  { label: "About Us", url: "/about-us" },
 ];
 ---
 
-<header class="bg-white shadow-sm sticky top-0 z-10">
+<header class="bg-white sticky top-0 z-10 border-b border-gray-100">
   <div class="container mx-auto px-4">
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center">
-        <span class="text-2xl font-bold text-amber-600">Furniture</span>
-        <span class="text-2xl font-light text-gray-700">Store</span>
-      </a>
-      
+      <Logo />
       <!-- Navegación para escritorio -->
       <nav class="hidden md:flex space-x-8">
-        {navItems.map(item => (
-          <a 
-            href={item.url} 
-            class="text-gray-600 hover:text-amber-600 transition-colors duration-300"
-          >
-            {item.label}
-          </a>
-        ))}
+        {
+          navItems.map((item) => (
+            <a href={item.url}>
+              <p class="p2 hover:text-primary-500 transition-colors duration-300">
+                {item.label}
+              </p>
+            </a>
+          ))
+        }
       </nav>
-      
+
       <!-- Iconos de usuario y carrito -->
       <div class="flex items-center space-x-4">
-        <a href="/cuenta" class="text-gray-600 hover:text-amber-600">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </a>
-        
-        <a href="/carrito" class="text-gray-600 hover:text-amber-600 relative">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-          <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+        <a href="/cart" class="text-gray-600 hover:text-primary-500 relative">
+          <img src={bag2} alt="bag" class="h-6 w-auto" />
+          <span
+            id="cart-count"
+            class="absolute -top-2 -right-2 bg-primary-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+          >
             0
           </span>
         </a>
-        
+
+        <a href="/account" class="text-gray-600 hover:text-primary-600">
+          <img src={user} alt="user" class="h-6 w-auto" />
+        </a>
+
         <!-- Botón de menú móvil -->
-        <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-amber-600">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+        <button
+          id="mobile-menu-button"
+          class="md:hidden text-gray-600 hover:text-primary-600"
+        >
+          <img src={menu} alt="menu" class="h-8 w-auto" />
         </button>
       </div>
     </div>
-    
+
     <!-- Menú móvil (oculto por defecto) -->
     <div id="mobile-menu" class="md:hidden hidden pb-4">
       <nav class="flex flex-col space-y-3">
-        {navItems.map(item => (
-          <a 
-            href={item.url} 
-            class="text-gray-600 hover:text-amber-600 transition-colors duration-300 py-2"
-          >
-            {item.label}
-          </a>
-        ))}
+        {
+          navItems.map((item) => (
+            <a href={item.url}>
+              <p class="p2 hover:text-primary-500 transition-colors duration-300">
+                {item.label}
+              </p>
+            </a>
+          ))
+        }
       </nav>
     </div>
   </div>
@@ -74,16 +76,15 @@ const navItems = [
 
 <script>
   // Lógica para el menú móvil
-  document.addEventListener('DOMContentLoaded', () => {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
     if (mobileMenuButton && mobileMenu) {
-      mobileMenuButton.addEventListener('click', () => {
+      mobileMenuButton.addEventListener("click", () => {
         // Toggle la clase 'hidden' para mostrar/ocultar el menú
-        mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle("hidden");
       });
     }
   });
 </script>
-
