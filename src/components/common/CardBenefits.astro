@@ -15,6 +15,8 @@ const { icon, title, description } = Astro.props;
     <Image src={icon} alt={title} class="w-6 h-6 object-cover" />
   </div>
 
-  <h3 class="text-lg font-semibold text-title-900 mt-4">{title}</h3>
-  <p class="text-paragraph-500 mt-2 text-left">{description}</p>
+  <h3 class="text-2xl font-semibold text-title-900 mt-4">{title}</h3>
+  <p class="text-sm md:text-lg text-paragraph-500 mt-2 text-left">
+    {description}
+  </p>
 </div>
