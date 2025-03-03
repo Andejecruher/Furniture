@@ -1,6 +1,6 @@
 ---
-import ProductCard from '../furniture/ProductCard.astro';
-import type { FurnitureProduct } from '../../types/furniture';
+import ProductCard from "../furniture/ProductCard.astro";
+import type { FurnitureProduct } from "../../types/furniture";
 
 interface Props {
   title: string;
@@ -13,21 +13,11 @@ const { title, products } = Astro.props;
 <section class="py-12 bg-gray-50">
   <div class="container mx-auto px-4">
     <h2 class="text-3xl font-bold text-center mb-8">{title}</h2>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {products.map((product) => (
-        <ProductCard product={product} featured={true} />
-      ))}
-    </div>
-    
-    <div class="text-center mt-10">
-      <a 
-        href="/productos" 
-        class="inline-block bg-amber-600 hover:bg-amber-700 text-white py-2 px-6 rounded-md transition-colors duration-300"
-      >
-        Ver Todos los Productos
-      </a>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      {products.map((product, index) => <ProductCard product={product} />)}
     </div>
   </div>
 </section>
-

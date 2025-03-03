@@ -1,10 +1,9 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import Hero from '../components/sections/Hero.astro';
-import FeaturedProducts from '../components/sections/FeaturedProducts.astro';
-import CategoryShowcase from '../components/sections/CategoryShowcase.astro';
-import Testimonials from '../components/sections/Testimonials.astro';
-import Newsletter from '../components/sections/Newsletter.astro';
+import MainLayout from "../layouts/MainLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import Benefits from "@/components/sections/Benefits.astro";
+import PopularProducts from "@/components/sections/PopularProducts.astro";
+import FeaturedProducts from "@/components/sections/FeaturedProducts.astro";
 
 // Datos de ejemplo para productos destacados
 const featuredProducts = [
@@ -15,36 +14,162 @@ const featuredProducts = [
     price: 899.99,
     discount: 10,
     category: "Sofás",
-    imageUrl: "https://via.placeholder.com/400",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
     inStock: true,
-    features: ["Tapizado de alta calidad", "Estructura de madera sólida", "Cojines extraíbles"],
+    features: [
+      "Tapizado de alta calidad",
+      "Estructura de madera sólida",
+      "Cojines extraíbles",
+    ],
     dimensions: {
       width: 220,
       height: 85,
       depth: 95,
-      unit: "cm"
+      unit: "cm",
     },
     materials: ["Algodón", "Madera de pino", "Espuma de alta densidad"],
-    colors: ["Gris", "Azul", "Beige"]
+    colors: ["Gris", "Azul", "Beige"],
   },
   {
     id: "mesa-1",
     name: "Mesa de Centro de Roble",
-    description: "Mesa de centro elegante con acabado de roble natural",
+    description: "Mesa con elegante con acabado de roble natural",
     price: 349.99,
     discount: 0,
     category: "Mesas",
-    imageUrl: "/images/furniture/table-1.jpg",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
     inStock: true,
     features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
     dimensions: {
       width: 120,
       height: 45,
       depth: 60,
-      unit: "cm"
+      unit: "cm",
     },
     materials: ["Roble macizo", "Metal"],
-    colors: ["Natural", "Oscuro"]
+    colors: ["Natural", "Oscuro"],
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa con elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 0,
+    category: "Mesas",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm",
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"],
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa con elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 10,
+    category: "Mesas",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm",
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"],
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa con elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 10,
+    category: "Mesas",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm",
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"],
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa con elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 0,
+    category: "Mesas",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm",
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"],
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa con elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 0,
+    category: "Mesas",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm",
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"],
+  },
+  {
+    id: "mesa-1",
+    name: "Mesa de Centro de Roble",
+    description: "Mesa con elegante con acabado de roble natural",
+    price: 349.99,
+    discount: 10,
+    category: "Mesas",
+    imageUrl:
+      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+    inStock: true,
+    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
+    dimensions: {
+      width: 120,
+      height: 45,
+      depth: 60,
+      unit: "cm",
+    },
+    materials: ["Roble macizo", "Metal"],
+    colors: ["Natural", "Oscuro"],
   },
   // Puedes añadir más productos aquí
 ];
@@ -52,9 +177,7 @@ const featuredProducts = [
 
 <MainLayout title="Inicio">
   <Hero />
+  <Benefits />
+  <PopularProducts />
   <FeaturedProducts title="Productos Destacados" products={featuredProducts} />
-  <CategoryShowcase />
-  <Testimonials />
-  <Newsletter />
 </MainLayout>
-

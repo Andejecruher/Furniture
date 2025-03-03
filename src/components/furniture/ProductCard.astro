@@ -1,71 +1,72 @@
 ---
 // Importamos TypeScript interfaces
-import type { FurnitureProduct } from '../../types/furniture';
+import type { FurnitureProduct } from "../../types/furniture";
 
 // Definimos las props usando TypeScript
 interface Props {
   product: FurnitureProduct;
-  featured?: boolean;
 }
 
 // Destructuramos las props con valores por defecto
-const { product, featured = false } = Astro.props;
+const { product } = Astro.props;
 ---
 
-<div class={`rounded-lg overflow-hidden shadow-md transition-transform duration-300 ${featured ? 'bg-amber-50' : 'bg-white'} hover:shadow-xl hover:-translate-y-1`}>
+<div class={`rounded-lg overflow-hidden`}>
   <div class="relative">
-    <img 
-      src={product.imageUrl || "/placeholder.svg"} 
-      alt={product.name} 
+    <img
+      src={product.imageUrl || "/placeholder.svg"}
+      alt={product.name}
       class="w-full h-64 object-cover"
     />
-    {product.discount > 0 && (
-      <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold">
-        {product.discount}% OFF
-      </div>
-    )}
-  </div>
-  
-  <div class="p-4">
-    <h3 class="text-xl font-semibold text-gray-800">{product.name}</h3>
-    <p class="text-gray-600 mt-1">{product.category}</p>
-    
-    <div class="mt-2 flex items-center">
-      {product.discount > 0 ? (
-        <div class="flex items-center">
-          <span class="text-lg font-bold text-gray-900">${(product.price * (1 - product.discount / 100)).toFixed(2)}</span>
-          <span class="ml-2 text-sm line-through text-gray-500">${product.price.toFixed(2)}</span>
+    {
+      product.discount > 0 && (
+        <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold">
+          {product.discount}% OFF
         </div>
-      ) : (
-        <span class="text-lg font-bold text-gray-900">${product.price.toFixed(2)}</span>
-      )}
-    </div>
-    
-    <div class="mt-4">
-      <button 
-        class="bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-md w-full transition-colors duration-300"
-        data-product-id={product.id}
-      >
-        Añadir al Carrito
-      </button>
+      )
+    }
+  </div>
+
+  <div class="p-4">
+    <p class="text-xs md:text-lg text-gray-600 mt-2 mb-2">
+      {product.category}
+    </p>
+    <h3 class="text-base font-semibold text-gray-800">{product.name}</h3>
+    <p class="text-sm text-gray-600 mt-2 mb-2">{product.description}</p>
+    <div class="mt-2 flex items-center">
+      {
+        product.discount > 0 ? (
+          <div class="flex items-center">
+            <span class="text-lg font-bold text-gray-900">
+              ${(product.price * (1 - product.discount / 100)).toFixed(2)}
+            </span>
+            <span class="ml-2 text-sm line-through text-gray-500">
+              ${product.price.toFixed(2)}
+            </span>
+          </div>
+        ) : (
+          <span class="text-base md:text-2xl font-bold text-gray-900">
+            ${product.price.toFixed(2)}
+          </span>
+        )
+      }
     </div>
   </div>
 </div>
 
 <script>
   // Client-side JavaScript para manejar eventos
-  document.addEventListener('DOMContentLoaded', () => {
-    const addToCartButtons = document.querySelectorAll('[data-product-id]');
-    
-    addToCartButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
+  document.addEventListener("DOMContentLoaded", () => {
+    const addToCartButtons = document.querySelectorAll("[data-product-id]");
+
+    addToCartButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
         const productId = (e.currentTarget as HTMLElement).dataset.productId;
         console.log(`Producto añadido al carrito: ${productId}`);
-        
+
         // Aquí puedes implementar la lógica para añadir al carrito
         // Por ejemplo, usando localStorage o enviando a una API
       });
     });
   });
 </script>
-
