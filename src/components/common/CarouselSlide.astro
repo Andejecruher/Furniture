@@ -1,0 +1,47 @@
+---
+export interface Props {
+  class?: string;
+  aspectRatio?: string;
+  objectFit?: "cover" | "contain" | "fill" | "none";
+  objectPosition?: string;
+}
+
+const {
+  class: className = "",
+  aspectRatio,
+  objectFit = "cover",
+  objectPosition = "center",
+} = Astro.props;
+---
+
+<div
+  class={`astro-carousel-slide ${className}`}
+  style={`
+    ${aspectRatio ? `aspect-ratio: ${aspectRatio};` : ""}
+    --object-fit: ${objectFit};
+    --object-position: ${objectPosition};
+  `}
+>
+  <slot />
+</div>
+
+<style>
+  .astro-carousel-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .astro-carousel-slide :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: var(--object-fit, cover);
+    object-position: var(--object-position, center);
+  }
+
+  .astro-carousel-slide :global(> *) {
+    width: 100%;
+    height: 100%;
+  }
+</style>

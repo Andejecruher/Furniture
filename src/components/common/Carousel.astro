@@ -1,0 +1,1145 @@
+---
+// Define las propiedades del componente
+export interface Props {
+  // Configuración de navegación
+  navigationPosition?:
+    | "left"
+    | "right"
+    | "top"
+    | "bottom"
+    | "inside"
+    | "split"
+    | "none";
+  indicatorPosition?: "bottom" | "top" | "left" | "right" | "none";
+
+  // Dimensiones
+  width?: string;
+  height?: string;
+
+  // Opciones adicionales
+  autoplay?: boolean;
+  autoplaySpeed?: number;
+  transitionSpeed?: number;
+  visibleItems?: number;
+  gap?: string;
+
+  // Nuevas opciones
+  theme?: "light" | "dark" | "auto";
+  transitionEffect?: "slide" | "fade" | "zoom";
+  pauseOnHover?: boolean;
+  enableDrag?: boolean;
+  showThumbnails?: boolean;
+  thumbnailPosition?: "bottom" | "top" | "left" | "right";
+  enableZoom?: boolean;
+  zoomFactor?: number;
+  enableParallax?: boolean;
+  parallaxIntensity?: number;
+
+  // Clases personalizadas
+  class?: string;
+  carouselClass?: string;
+  slideClass?: string;
+  navigationClass?: string;
+  indicatorClass?: string;
+
+  // ID único para el carrusel
+  id?: string;
+  peekAmount?: number;
+
+  // Nueva propiedad para controlar el comportamiento de clic en slides
+  disableSlideNavigation?: boolean; // Si es true, no navegará al hacer clic en un slide
+  slideClickCallback?: string; // Nombre de la función global para manejar clics en slides
+}
+
+const {
+  navigationPosition = "inside",
+  indicatorPosition = "bottom",
+  width = "100%",
+  height = "auto",
+  autoplay = false,
+  autoplaySpeed = 5000,
+  transitionSpeed = 500,
+  visibleItems = 1,
+  gap = "0px",
+  theme = "light",
+  transitionEffect = "slide",
+  pauseOnHover = true,
+  enableDrag = true,
+  showThumbnails = false,
+  thumbnailPosition = "bottom",
+  enableZoom = false,
+  zoomFactor = 0,
+  enableParallax = false,
+  parallaxIntensity = 20,
+  class: className = "",
+  carouselClass = "",
+  slideClass = "",
+  navigationClass = "",
+  indicatorClass = "",
+  id = `carousel-${Math.random().toString(36).substring(2, 11)}`,
+  peekAmount = 10,
+  disableSlideNavigation = false,
+  slideClickCallback = "",
+} = Astro.props;
+
+const containerClasses = [
+  "astro-carousel-container",
+  `nav-${navigationPosition}`,
+  `indicator-${indicatorPosition}`,
+  `theme-${theme}`,
+  `transition-${transitionEffect}`,
+  showThumbnails ? `thumbnails-${thumbnailPosition}` : "",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const carouselClasses = ["astro-carousel", carouselClass]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={containerClasses} id={id} data-theme={theme}>
+  <div class={carouselClasses}>
+    <div
+      class="astro-carousel-track"
+      role="region"
+      aria-label="Carrusel de imágenes"
+      tabindex="0"
+    >
+      <slot />
+    </div>
+
+    {
+      navigationPosition !== "none" && (
+        <>
+          {navigationPosition === "split" ? (
+            <>
+              <div class="astro-carousel-navigation split-left">
+                <button class="astro-carousel-prev" aria-label="Anterior">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                  <span class="sr-only">Anterior</span>
+                </button>
+              </div>
+              <div class="astro-carousel-navigation split-right">
+                <button class="astro-carousel-next" aria-label="Siguiente">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                  <span class="sr-only">Siguiente</span>
+                </button>
+              </div>
+            </>
+          ) : (
+            <div
+              class={`astro-carousel-navigation ${navigationPosition} ${navigationClass}`}
+            >
+              <button class="astro-carousel-prev" aria-label="Anterior">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span class="sr-only">Anterior</span>
+              </button>
+              <button class="astro-carousel-next" aria-label="Siguiente">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+                <span class="sr-only">Siguiente</span>
+              </button>
+            </div>
+          )}
+        </>
+      )
+    }
+
+    {
+      indicatorPosition !== "none" && (
+        <div
+          class={`astro-carousel-indicators ${indicatorPosition} ${indicatorClass}`}
+          role="tablist"
+          aria-label="Indicadores de slides"
+        />
+      )
+    }
+
+    {
+      showThumbnails && (
+        <div
+          class={`astro-carousel-thumbnails ${thumbnailPosition}`}
+          role="tablist"
+          aria-label="Miniaturas de slides"
+        />
+      )
+    }
+  </div>
+</div>
+
+<style
+  define:vars={{
+    carouselWidth: width,
+    carouselHeight: height,
+    transitionSpeed: `${transitionSpeed}ms`,
+    itemGap: gap,
+    peekAmount: `${peekAmount}%`,
+    zoomFactor: zoomFactor,
+    parallaxIntensity: `${parallaxIntensity}px`,
+  }}
+>
+  /* Variables CSS para temas */
+  .astro-carousel-container {
+    --carousel-bg: #ffffff;
+    --carousel-text: #000000;
+    --carousel-button-bg: rgba(255, 255, 255, 0.7);
+    --carousel-button-hover: rgba(255, 255, 255, 0.9);
+    --carousel-button-active: rgba(255, 255, 255, 1);
+    --carousel-indicator-bg: rgba(255, 255, 255, 0.5);
+    --carousel-indicator-active: rgba(255, 255, 255, 1);
+    --carousel-shadow: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Tema oscuro */
+  .astro-carousel-container[data-theme="dark"] {
+    --carousel-bg: #1a1a1a;
+    --carousel-text: #ffffff;
+    --carousel-button-bg: rgba(0, 0, 0, 0.7);
+    --carousel-button-hover: rgba(0, 0, 0, 0.9);
+    --carousel-button-active: rgba(0, 0, 0, 1);
+    --carousel-indicator-bg: rgba(0, 0, 0, 0.5);
+    --carousel-indicator-active: rgba(0, 0, 0, 1);
+    --carousel-shadow: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Tema automático basado en preferencias del sistema */
+  @media (prefers-color-scheme: dark) {
+    .astro-carousel-container[data-theme="auto"] {
+      --carousel-bg: #1a1a1a;
+      --carousel-text: #ffffff;
+      --carousel-button-bg: rgba(0, 0, 0, 0.7);
+      --carousel-button-hover: rgba(0, 0, 0, 0.9);
+      --carousel-button-active: rgba(0, 0, 0, 1);
+      --carousel-indicator-bg: rgba(0, 0, 0, 0.5);
+      --carousel-indicator-active: rgba(0, 0, 0, 1);
+      --carousel-shadow: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .astro-carousel-container {
+    position: relative;
+    width: var(--carouselWidth);
+    height: var(--carouselHeight);
+    overflow: visible;
+    color: var(--carousel-text);
+    background-color: var(--carousel-bg);
+  }
+
+  .astro-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 0 var(--peekAmount);
+  }
+
+  .astro-carousel-track {
+    display: flex;
+    transition: transform var(--transitionSpeed) cubic-bezier(0.4, 0, 0.2, 1);
+    gap: var(--itemGap);
+    height: 100%;
+    will-change: transform;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  /* Clase para deshabilitar transiciones temporalmente */
+  .astro-carousel-track.no-transition {
+    transition: none !important;
+  }
+
+  /* Efectos de transición */
+  .transition-fade .astro-carousel-slide {
+    transition: opacity var(--transitionSpeed) ease-in-out;
+  }
+
+  .transition-zoom .astro-carousel-slide {
+    transition: transform var(--transitionSpeed) ease-in-out;
+  }
+
+  /* Efecto Parallax */
+  .astro-carousel-container[data-parallax="true"] .astro-carousel-slide {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .astro-carousel-container[data-parallax="true"] .astro-carousel-slide img {
+    transform: translateZ(var(--parallaxIntensity));
+  }
+
+  /* Navegación */
+  .astro-carousel-navigation {
+    position: absolute;
+    z-index: 10;
+  }
+
+  .astro-carousel-navigation.split-left,
+  .astro-carousel-navigation.split-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .astro-carousel-navigation.split-left {
+    left: 10px;
+  }
+
+  .astro-carousel-navigation.split-right {
+    right: 10px;
+  }
+
+  .astro-carousel-prev,
+  .astro-carousel-next {
+    background-color: var(--carousel-button-bg);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--carousel-text);
+    backdrop-filter: blur(4px);
+  }
+
+  .astro-carousel-prev:hover,
+  .astro-carousel-next:hover {
+    background-color: var(--carousel-button-hover);
+    transform: scale(1.1);
+  }
+
+  .astro-carousel-prev:active,
+  .astro-carousel-next:active {
+    background-color: var(--carousel-button-active);
+    transform: scale(0.95);
+  }
+
+  .astro-carousel-prev:focus-visible,
+  .astro-carousel-next:focus-visible {
+    outline: 2px solid var(--carousel-text);
+    outline-offset: 2px;
+  }
+
+  .astro-carousel-prev svg,
+  .astro-carousel-next svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+
+  .astro-carousel-prev:hover svg {
+    transform: translateX(-2px);
+  }
+
+  .astro-carousel-next:hover svg {
+    transform: translateX(2px);
+  }
+
+  /* Indicadores */
+  .astro-carousel-indicators {
+    position: absolute;
+    display: flex;
+    z-index: 10;
+    gap: 8px;
+  }
+
+  .astro-carousel-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--carousel-indicator-bg);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    padding: 0;
+  }
+
+  .astro-carousel-indicator:hover {
+    transform: scale(1.2);
+  }
+
+  .astro-carousel-indicator.active {
+    background-color: var(--carousel-indicator-active);
+    transform: scale(1.2);
+  }
+
+  .astro-carousel-indicator:focus-visible {
+    outline: 2px solid var(--carousel-text);
+    outline-offset: 2px;
+  }
+
+  /* Miniaturas */
+  .astro-carousel-thumbnails {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    background-color: var(--carousel-bg);
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--carousel-indicator-bg) transparent;
+  }
+
+  .astro-carousel-thumbnails::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .astro-carousel-thumbnails::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .astro-carousel-thumbnails::-webkit-scrollbar-thumb {
+    background-color: var(--carousel-indicator-bg);
+    border-radius: 3px;
+  }
+
+  .thumbnails-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .thumbnails-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .thumbnails-left,
+  .thumbnails-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    flex-direction: column;
+  }
+
+  .thumbnails-left {
+    left: 0;
+  }
+
+  .thumbnails-right {
+    right: 0;
+  }
+
+  /* Slides */
+  :global(.astro-carousel-slide) {
+    flex: 0 0 calc((100% - (2 * var(--peekAmount))) / var(--visibleItems, 1));
+    min-width: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: scale(1);
+    position: relative;
+    cursor: pointer;
+  }
+
+  :global(.astro-carousel-slide.active) {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  :global(.astro-carousel-slide.dragging) {
+    cursor: grabbing;
+  }
+
+  /* Zoom en hover */
+  :global(.astro-carousel-slide[data-zoom="true"]:hover img) {
+    transform: scale(var(--zoomFactor));
+  }
+
+  :global(.astro-carousel-slide[data-zoom="true"] img) {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  /* Clonados */
+  :global(.cloned-slide) {
+    flex: 0 0 calc((100% - (2 * var(--peekAmount))) / var(--visibleItems, 1));
+    min-width: 0;
+  }
+
+  /* Accesibilidad y estados */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .astro-carousel-track,
+    :global(.astro-carousel-slide),
+    .astro-carousel-prev,
+    .astro-carousel-next,
+    .astro-carousel-indicator {
+      transition: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    :global(.astro-carousel-slide[data-zoom="true"]:hover img) {
+      transform: none;
+    }
+  }
+</style>
+
+<script
+  define:vars={{
+    id,
+    autoplay,
+    autoplaySpeed,
+    visibleItems,
+    transitionSpeed,
+    peekAmount,
+    pauseOnHover,
+    enableDrag,
+    showThumbnails,
+    enableZoom,
+    enableParallax,
+    parallaxIntensity,
+    disableSlideNavigation,
+    slideClickCallback,
+  }}
+>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById(id);
+    if (!container) return;
+
+    const track = container.querySelector(".astro-carousel-track");
+    const slides = Array.from(track.children);
+    const prevButton = container.querySelector(".astro-carousel-prev");
+    const nextButton = container.querySelector(".astro-carousel-next");
+    const indicatorsContainer = container.querySelector(
+      ".astro-carousel-indicators"
+    );
+    const thumbnailsContainer = container.querySelector(
+      ".astro-carousel-thumbnails"
+    );
+
+    // Variables para el control del carrusel
+    let isDragging = false;
+    let isTransitioning = false;
+    let startPos = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let animationID = 0;
+    let currentIndex = visibleItems;
+    let dragStartTime = 0;
+    let dragDistance = 0;
+    let clickTimeout = null;
+    let autoplayInterval = null;
+    let isSlideClick = false;
+    let lastInteractionTime = 0;
+
+    // Función para medir el tiempo desde la última interacción
+    const updateLastInteractionTime = () => {
+      lastInteractionTime = Date.now();
+    };
+
+    // Función para verificar si ha pasado suficiente tiempo desde la última interacción
+    const hasDebounceTimePassed = () => {
+      return Date.now() - lastInteractionTime >= 300; // 300ms de debounce
+    };
+
+    // Configuración inicial
+    const setupSlides = () => {
+      slides.forEach((slide, index) => {
+        slide.classList.add("astro-carousel-slide");
+
+        // Añadir atributos de datos para identificar el slide
+        slide.setAttribute("data-slide-index", index.toString());
+        slide.setAttribute("data-original-index", index.toString());
+
+        if (enableZoom) {
+          slide.setAttribute("data-zoom", "true");
+        }
+
+        // Añadir evento de clic a cada slide
+        slide.addEventListener("click", (e) => {
+          if (isDragging) return; // No procesar clics durante arrastre
+
+          const slideElement = e.currentTarget;
+          const slideIndex = parseInt(
+            slideElement.getAttribute("data-slide-index")
+          );
+          const originalIndex = parseInt(
+            slideElement.getAttribute("data-original-index")
+          );
+          const isActive = slideElement.classList.contains("active");
+
+          // Crear objeto con información del slide
+          const slideInfo = {
+            element: slideElement,
+            index: slideIndex,
+            originalIndex: originalIndex,
+            isActive: isActive,
+            content: slideElement.innerHTML,
+            carouselId: id,
+          };
+
+          // Disparar evento personalizado
+          const slideClickEvent = new CustomEvent("slide-click", {
+            detail: slideInfo,
+            bubbles: true,
+          });
+          slideElement.dispatchEvent(slideClickEvent);
+
+          // Si hay una función de callback definida, llamarla
+          if (
+            slideClickCallback &&
+            typeof window[slideClickCallback] === "function"
+          ) {
+            window[slideClickCallback](slideInfo);
+          }
+
+          // Si no está deshabilitada la navegación por clic, navegar al slide
+          if (!disableSlideNavigation && !isActive) {
+            // Calcular el índice real incluyendo los slides clonados
+            const allSlides = Array.from(track.children);
+            const clickedIndex = allSlides.indexOf(slideElement);
+            if (clickedIndex >= 0) {
+              updateCarousel(clickedIndex);
+            }
+          }
+        });
+      });
+
+      track.style.setProperty("--visibleItems", visibleItems);
+
+      if (enableParallax) {
+        container.setAttribute("data-parallax", "true");
+      }
+    };
+
+    // Clonar slides
+    const cloneSlides = () => {
+      const slidesToClone = Math.max(visibleItems, 2);
+
+      // Clonar al final
+      for (let i = 0; i < slidesToClone; i++) {
+        const clone = slides[i].cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        clone.classList.add("cloned-slide");
+        // Mantener el índice original para referencia
+        clone.setAttribute(
+          "data-original-index",
+          slides[i].getAttribute("data-slide-index")
+        );
+        track.appendChild(clone);
+      }
+
+      // Clonar al principio
+      for (let i = slides.length - 1; i >= slides.length - slidesToClone; i--) {
+        if (i >= 0) {
+          const clone = slides[i].cloneNode(true);
+          clone.setAttribute("aria-hidden", "true");
+          clone.classList.add("cloned-slide");
+          // Mantener el índice original para referencia
+          clone.setAttribute(
+            "data-original-index",
+            slides[i].getAttribute("data-slide-index")
+          );
+          track.insertBefore(clone, track.firstChild);
+        }
+      }
+
+      // Actualizar los índices de todos los slides (incluyendo clones)
+      Array.from(track.children).forEach((slide, index) => {
+        slide.setAttribute("data-slide-index", index.toString());
+      });
+    };
+
+    // Crear indicadores
+    const createIndicators = () => {
+      if (indicatorsContainer) {
+        slides.forEach((_, index) => {
+          const indicator = document.createElement("button");
+          indicator.classList.add("astro-carousel-indicator");
+          indicator.setAttribute("aria-label", `Ir al slide ${index + 1}`);
+          indicator.setAttribute("role", "tab");
+          indicator.dataset.index = index.toString();
+
+          indicator.addEventListener("click", () => {
+            updateLastInteractionTime();
+            updateCarousel(index + visibleItems);
+          });
+
+          indicatorsContainer.appendChild(indicator);
+        });
+      }
+    };
+
+    // Crear miniaturas
+    const createThumbnails = () => {
+      if (thumbnailsContainer && showThumbnails) {
+        slides.forEach((slide, index) => {
+          const thumbnail = document.createElement("button");
+          thumbnail.classList.add("astro-carousel-thumbnail");
+          thumbnail.setAttribute("aria-label", `Ver slide ${index + 1}`);
+          thumbnail.setAttribute("role", "tab");
+
+          // Clonar el contenido del slide para la miniatura
+          const content = slide.cloneNode(true);
+          content.style.pointerEvents = "none";
+          thumbnail.appendChild(content);
+
+          thumbnail.addEventListener("click", () => {
+            updateLastInteractionTime();
+            updateCarousel(index + visibleItems);
+          });
+
+          thumbnailsContainer.appendChild(thumbnail);
+        });
+      }
+    };
+
+    // Función para manejar el efecto parallax
+    const handleParallax = (e) => {
+      if (!enableParallax) return;
+
+      const slide = e.currentTarget;
+      const { left, width } = slide.getBoundingClientRect();
+      const offsetX = (e.clientX - left) / width - 0.5;
+
+      const intensity = parallaxIntensity;
+      const transform = `
+        translateX(${offsetX * intensity}px)
+        scale(1.1)
+      `;
+
+      const img = slide.querySelector("img");
+      if (img) {
+        img.style.transform = transform;
+      }
+    };
+
+    // Actualizar carrusel
+    const updateCarousel = (index, animate = true) => {
+      if (isDragging || isTransitioning) return;
+
+      isTransitioning = true;
+
+      let realIndex = index - visibleItems;
+
+      while (realIndex < 0) {
+        realIndex += slides.length;
+      }
+      realIndex = realIndex % slides.length;
+
+      currentIndex = index;
+
+      const offset = (-currentIndex * (100 - 2 * peekAmount)) / visibleItems;
+
+      if (animate) {
+        track.classList.remove("no-transition");
+        track.style.transition = `transform ${transitionSpeed}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+      } else {
+        track.classList.add("no-transition");
+        track.style.transition = "none";
+      }
+
+      track.style.transform = `translateX(${offset}%)`;
+
+      // Actualizar clases activas
+      const allSlides = Array.from(track.children);
+      allSlides.forEach((slide, i) => {
+        if (i === currentIndex) {
+          slide.classList.add("active");
+          slide.setAttribute("aria-hidden", "false");
+        } else {
+          slide.classList.remove("active");
+          slide.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      // Actualizar indicadores
+      if (indicatorsContainer) {
+        const indicators = container.querySelectorAll(
+          ".astro-carousel-indicator"
+        );
+        indicators.forEach((indicator, i) => {
+          if (i === realIndex) {
+            indicator.classList.add("active");
+            indicator.setAttribute("aria-selected", "true");
+          } else {
+            indicator.classList.remove("active");
+            indicator.setAttribute("aria-selected", "false");
+          }
+        });
+      }
+
+      // Actualizar miniaturas
+      if (thumbnailsContainer) {
+        const thumbnails = container.querySelectorAll(
+          ".astro-carousel-thumbnail"
+        );
+        thumbnails.forEach((thumbnail, i) => {
+          if (i === realIndex) {
+            thumbnail.classList.add("active");
+            thumbnail.setAttribute("aria-selected", "true");
+          } else {
+            thumbnail.classList.remove("active");
+            thumbnail.setAttribute("aria-selected", "false");
+          }
+        });
+      }
+
+      if (animate) {
+        setTimeout(() => {
+          if (currentIndex >= slides.length + visibleItems) {
+            track.classList.add("no-transition");
+            updateCarousel(visibleItems, false);
+            setTimeout(() => {
+              track.classList.remove("no-transition");
+              isTransitioning = false;
+            }, 50);
+          } else if (currentIndex < visibleItems) {
+            track.classList.add("no-transition");
+            updateCarousel(slides.length, false);
+            setTimeout(() => {
+              track.classList.remove("no-transition");
+              isTransitioning = false;
+            }, 50);
+          } else {
+            isTransitioning = false;
+          }
+        }, transitionSpeed);
+      } else {
+        isTransitioning = false;
+      }
+
+      // Disparar evento de cambio de slide
+      const slideChangeEvent = new CustomEvent("slide-change", {
+        detail: {
+          currentIndex: currentIndex,
+          realIndex: realIndex,
+          carouselId: id,
+        },
+        bubbles: true,
+      });
+      container.dispatchEvent(slideChangeEvent);
+    };
+
+    // Funciones para el arrastre
+    const touchStart = (e) => {
+      if (!enableDrag || isTransitioning) return;
+
+      updateLastInteractionTime();
+
+      // Detener el autoplay
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+      }
+
+      // Registrar tiempo de inicio y posición
+      dragStartTime = Date.now();
+      dragDistance = 0;
+
+      isDragging = true;
+      startPos = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+      currentTranslate = getTranslateX();
+      prevTranslate = currentTranslate;
+
+      // Añadir clase de arrastre
+      track.classList.add("dragging");
+
+      // Detener la animación si está en curso
+      cancelAnimationFrame(animationID);
+    };
+
+    const touchMove = (e) => {
+      if (!isDragging) return;
+
+      const currentPosition = e.type.includes("mouse")
+        ? e.pageX
+        : e.touches[0].clientX;
+      dragDistance = Math.abs(currentPosition - startPos);
+
+      // Si el movimiento es significativo, no es un clic
+      if (dragDistance > 5) {
+        isSlideClick = false;
+
+        const diff = currentPosition - startPos;
+        const slideWidth = track.clientWidth / visibleItems;
+        const dragRatio = diff / slideWidth;
+
+        // Aplicar la transformación con límites para evitar arrastres extremos
+        const maxDrag = 1; // Limitar el arrastre a 1 slide de distancia
+        const limitedDragRatio = Math.max(
+          Math.min(dragRatio, maxDrag),
+          -maxDrag
+        );
+
+        currentTranslate = prevTranslate + limitedDragRatio * 100;
+        track.classList.add("no-transition");
+        track.style.transform = `translateX(${currentTranslate}%)`;
+      }
+    };
+
+    const touchEnd = () => {
+      if (!isDragging) return;
+
+      isDragging = false;
+      track.classList.remove("dragging");
+      track.classList.remove("no-transition");
+
+      // Calcular la velocidad del arrastre
+      const dragTime = Date.now() - dragStartTime;
+      const dragSpeed = dragDistance / dragTime;
+
+      // Determinar cuántos slides mover basado en la distancia y velocidad
+      const slideWidth = track.clientWidth / visibleItems;
+      let draggedSlides = Math.round(
+        (currentTranslate - prevTranslate) / (100 / visibleItems)
+      );
+
+      // Si el arrastre fue rápido, añadir momentum
+      if (dragSpeed > 0.5 && draggedSlides === 0) {
+        draggedSlides = currentTranslate > prevTranslate ? 1 : -1;
+      }
+
+      // Limitar el movimiento a un slide a la vez para evitar saltos
+      draggedSlides = Math.max(Math.min(draggedSlides, 1), -1);
+
+      // Actualizar el carrusel con debounce
+      setTimeout(() => {
+        updateCarousel(currentIndex - draggedSlides);
+
+        // Reiniciar autoplay si está habilitado
+        if (autoplay) {
+          startAutoplay();
+        }
+      }, 50);
+
+      // Si fue un toque rápido sin mucho movimiento, podría ser un clic
+      if (dragDistance < 5 && dragTime < 300) {
+        isSlideClick = true;
+      }
+    };
+
+    const getTranslateX = () => {
+      const style = window.getComputedStyle(track);
+      const matrix = new WebKitCSSMatrix(style.transform);
+      return (matrix.m41 / track.clientWidth) * 100;
+    };
+
+    // Función para manejar el resize
+    const handleResize = () => {
+      const containerWidth = container.clientWidth;
+
+      // Actualizar posición sin animación
+      updateCarousel(currentIndex, false);
+    };
+
+    // Observador de redimensionamiento
+    const resizeObserver = new ResizeObserver(() => {
+      // Usar debounce para evitar múltiples actualizaciones
+      clearTimeout(window.resizeTimer);
+      window.resizeTimer = setTimeout(handleResize, 100);
+    });
+    resizeObserver.observe(container);
+
+    // Autoplay
+    const startAutoplay = () => {
+      if (autoplay) {
+        // Limpiar intervalo existente si hay uno
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+        }
+
+        autoplayInterval = setInterval(() => {
+          // Solo avanzar si no hay interacción reciente
+          if (!isDragging && !isTransitioning && hasDebounceTimePassed()) {
+            updateCarousel(currentIndex + 1);
+          }
+        }, autoplaySpeed);
+      }
+    };
+
+    // Pausar en hover
+    if (pauseOnHover) {
+      container.addEventListener("mouseenter", () => {
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+          autoplayInterval = null;
+        }
+      });
+
+      container.addEventListener("mouseleave", () => {
+        if (autoplay) {
+          startAutoplay();
+        }
+      });
+    }
+
+    // Inicialización
+    setupSlides();
+    cloneSlides();
+    createIndicators();
+    createThumbnails();
+    updateCarousel(currentIndex, false);
+    handleResize();
+
+    // Eventos de navegación
+    if (prevButton) {
+      prevButton.addEventListener("click", () => {
+        updateLastInteractionTime();
+        updateCarousel(currentIndex - 1);
+      });
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener("click", () => {
+        updateLastInteractionTime();
+        updateCarousel(currentIndex + 1);
+      });
+    }
+
+    // Eventos de arrastre
+    if (enableDrag) {
+      track.addEventListener("mousedown", touchStart, { passive: true });
+      track.addEventListener("touchstart", touchStart, { passive: true });
+      window.addEventListener("mousemove", touchMove, { passive: true });
+      window.addEventListener("touchmove", touchMove, { passive: true });
+      window.addEventListener("mouseup", touchEnd);
+      window.addEventListener("touchend", touchEnd);
+      window.addEventListener("mouseleave", touchEnd);
+    }
+
+    // Efecto parallax
+    if (enableParallax) {
+      slides.forEach((slide) => {
+        slide.addEventListener("mousemove", handleParallax);
+        slide.addEventListener("mouseleave", () => {
+          const img = slide.querySelector("img");
+          if (img) {
+            img.style.transform = "";
+          }
+        });
+      });
+    }
+
+    // Eventos de teclado
+    container.addEventListener("keydown", (e) => {
+      updateLastInteractionTime();
+      switch (e.key) {
+        case "ArrowLeft":
+          updateCarousel(currentIndex - 1);
+          break;
+        case "ArrowRight":
+          updateCarousel(currentIndex + 1);
+          break;
+        case "Home":
+          updateCarousel(visibleItems);
+          break;
+        case "End":
+          updateCarousel(slides.length);
+          break;
+      }
+    });
+
+    // Iniciar autoplay
+    startAutoplay();
+
+    // Exponer API pública para el carrusel
+    window[`carousel_${id}`] = {
+      goToSlide: (index) => {
+        const targetIndex = index + visibleItems;
+        updateCarousel(targetIndex);
+      },
+      next: () => {
+        updateCarousel(currentIndex + 1);
+      },
+      prev: () => {
+        updateCarousel(currentIndex - 1);
+      },
+      getCurrentIndex: () => {
+        return currentIndex - visibleItems;
+      },
+      getSlideInfo: (index) => {
+        const slideIndex = index + visibleItems;
+        const allSlides = Array.from(track.children);
+        if (slideIndex >= 0 && slideIndex < allSlides.length) {
+          const slide = allSlides[slideIndex];
+          return {
+            element: slide,
+            index: slideIndex,
+            originalIndex: parseInt(slide.getAttribute("data-original-index")),
+            isActive: slide.classList.contains("active"),
+            content: slide.innerHTML,
+          };
+        }
+        return null;
+      },
+      pause: () => {
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+          autoplayInterval = null;
+        }
+      },
+      resume: () => {
+        if (autoplay) {
+          startAutoplay();
+        }
+      },
+    };
+
+    // Limpiar al desmontar
+    return () => {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+      }
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  });
+</script>
