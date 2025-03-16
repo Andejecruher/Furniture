@@ -12,28 +12,23 @@ interface Props {
 }
 
 const { title, description, paragraph, products } = Astro.props;
-
-// Función para determinar el número de elementos visibles basado en el ancho de la pantalla
-const getVisibleItems = () => {
-  if (typeof window !== "undefined") {
-    return window.innerWidth < 768 ? 1 : 2;
-  }
-  return 2; // Valor por defecto
-};
-
-const visibleItems = getVisibleItems();
 ---
 
 <section class="mb-8">
   <div class="container mx-auto p-4">
     <div class="flex flex-col justify-center items-center mb-4">
-      <span class="text-sm text-secondary-300 font-semibold text-center"
+      <span
+        class="text-sm md:text-lg text-secondary-300 font-semibold text-center"
         >{title}</span
       >
-      <p class="text-2xl text-paragraph-950 font-bold text-center">
+      <p class="text-2xl md:text-5xl text-paragraph-950 font-bold text-center">
         {description}
       </p>
-      <p class="mt-4 text-sm text-paragraph-500 max-w-96">{paragraph}</p>
+      <p
+        class="mt-4 text-sm md:text-lg text-paragraph-500 max-w-96 md:max-w-2xl text-left md:text-center"
+      >
+        {paragraph}
+      </p>
     </div>
   </div>
   <Carousel
@@ -41,10 +36,9 @@ const visibleItems = getVisibleItems();
     indicatorPosition="bottom"
     navigationPosition="split"
     autoplay={true}
-    autoplaySpeed={3000}
+    autoplaySpeed={2000}
     peekAmount={10}
-    visibleItems={visibleItems}
-    gap="10px"
+    gap="28px"
   >
     {
       products.map((product, index) => (
@@ -55,22 +49,3 @@ const visibleItems = getVisibleItems();
     }
   </Carousel>
 </section>
-
-<script>
-  const carousel = document.querySelector("#carousel-products");
-  console.log("🚀 > visibleItems:", carousel);
-  // Escuchar cambios en el tamaño de la ventana y actualizar visibleItems
-  if (typeof window !== "undefined") {
-    window.addEventListener("resize", () => {
-      const newVisibleItems = window.innerWidth < 768 ? 1 : 2;
-      console.log(
-        "🚀 > window.addEventListener > newVisibleItems:",
-        newVisibleItems
-      );
-      const carousel = document.querySelector("#carousel-products"); // Asegúrate de seleccionar correctamente tu carousel
-      if (carousel) {
-        carousel.setAttribute("visibleItems", newVisibleItems.toString());
-      }
-    });
-  }
-</script>

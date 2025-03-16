@@ -3,7 +3,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Hero from "../components/sections/Hero.astro";
 import Benefits from "@/components/sections/Benefits.astro";
 import PopularProducts from "@/components/sections/PopularProducts.astro";
-import FeaturedProducts from "@/components/sections/FeaturedProducts.astro";
+import OurProduct from "@/components/sections/OurProduct.astro";
 
 // Datos de ejemplo para productos destacados
 const featuredProducts = [
@@ -15,7 +15,7 @@ const featuredProducts = [
     discount: 10,
     category: "Sofás",
     imageUrl:
-      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     inStock: true,
     features: [
       "Tapizado de alta calidad",
@@ -39,7 +39,7 @@ const featuredProducts = [
     discount: 0,
     category: "Mesas",
     imageUrl:
-      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+      "https://media.istockphoto.com/id/1435912306/photo/beautiful-indian-woman-use-smartphone-relaxing-on-armchair.jpg?s=1024x1024&w=is&k=20&c=vfxWKqv-mnLZrwb_AxZVZxX9LDv-mTwKSSVqJzZFbbU=",
     inStock: true,
     features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
     dimensions: {
@@ -79,87 +79,7 @@ const featuredProducts = [
     discount: 10,
     category: "Mesas",
     imageUrl:
-      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
-    inStock: true,
-    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
-    dimensions: {
-      width: 120,
-      height: 45,
-      depth: 60,
-      unit: "cm",
-    },
-    materials: ["Roble macizo", "Metal"],
-    colors: ["Natural", "Oscuro"],
-  },
-  {
-    id: "mesa-1",
-    name: "Mesa de Centro de Roble",
-    description: "Mesa con elegante con acabado de roble natural",
-    price: 349.99,
-    discount: 10,
-    category: "Mesas",
-    imageUrl:
-      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
-    inStock: true,
-    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
-    dimensions: {
-      width: 120,
-      height: 45,
-      depth: 60,
-      unit: "cm",
-    },
-    materials: ["Roble macizo", "Metal"],
-    colors: ["Natural", "Oscuro"],
-  },
-  {
-    id: "mesa-1",
-    name: "Mesa de Centro de Roble",
-    description: "Mesa con elegante con acabado de roble natural",
-    price: 349.99,
-    discount: 0,
-    category: "Mesas",
-    imageUrl:
-      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
-    inStock: true,
-    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
-    dimensions: {
-      width: 120,
-      height: 45,
-      depth: 60,
-      unit: "cm",
-    },
-    materials: ["Roble macizo", "Metal"],
-    colors: ["Natural", "Oscuro"],
-  },
-  {
-    id: "mesa-1",
-    name: "Mesa de Centro de Roble",
-    description: "Mesa con elegante con acabado de roble natural",
-    price: 349.99,
-    discount: 0,
-    category: "Mesas",
-    imageUrl:
-      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
-    inStock: true,
-    features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
-    dimensions: {
-      width: 120,
-      height: 45,
-      depth: 60,
-      unit: "cm",
-    },
-    materials: ["Roble macizo", "Metal"],
-    colors: ["Natural", "Oscuro"],
-  },
-  {
-    id: "mesa-1",
-    name: "Mesa de Centro de Roble",
-    description: "Mesa con elegante con acabado de roble natural",
-    price: 349.99,
-    discount: 10,
-    category: "Mesas",
-    imageUrl:
-      "https://st4.depositphotos.com/6733070/20938/i/950/depositphotos_209383086-stock-photo-modern-office-working-room-interior.jpg",
+      "https://media.istockphoto.com/id/1816480971/photo/cozy-afternoon-with-smart-home-entertainment.jpg?s=1024x1024&w=is&k=20&c=vSDThXq6CPSdAmFTNVpDNjXiRttk7qnfhOLVD5_Vs_Y=",
     inStock: true,
     features: ["Madera de roble macizo", "Acabado natural", "Fácil montaje"],
     dimensions: {
@@ -183,5 +103,10 @@ const featuredProducts = [
     description="Our popular product"
     paragraph="Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi, adipiscing mauris non purus parturient."
     products={featuredProducts}
+  />
+  <OurProduct
+    title="Our Product"
+    subtitle="Crafted by talented and high quality material"
+    paragraph="Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi, adipiscing mauris non purus parturient. morbi fermentum, vivamus et accumsan dui tincidunt pulvinar. "
   />
 </MainLayout>

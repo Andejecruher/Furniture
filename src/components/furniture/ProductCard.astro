@@ -16,7 +16,7 @@ const { product } = Astro.props;
     <img
       src={product.imageUrl || "/placeholder.svg"}
       alt={product.name}
-      class="w-full h-96 object-cover"
+      class="object-cover w-[220px] h-[194px] md:w-[394px] md:h-[360px]"
     />
     {
       product.discount > 0 && (
