@@ -36,35 +36,33 @@ const allTestimonials = [...testimonials, ...testimonials, ...testimonials];
 ---
 
 <section class="py-8 bg-white">
-  <div class="container mx-auto">
-    <div class="text-center mb-12">
-      <span
-        class="text-sm md:text-lg text-secondary-300 font-semibold mb-2 ml-2 text-center block md:inline-block"
-        >Testimonials</span
-      >
-      <p class="text-2xl xl:text-5xl text-paragraph-950 font-bold text-center">
-        What our customer say
-      </p>
-      <p
-        class="mt-4 md:mt-8 text-sm md:text-lg text-paragraph-500 text-center md:max-w-xl md:mx-auto"
-      >
-        Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim
-        placerat nisi, adipiscing mauris non purus parturient.
-      </p>
-    </div>
+  <div class="text-center mb-12">
+    <span
+      class="text-sm md:text-lg text-secondary-300 font-semibold mb-2 ml-2 text-center block md:inline-block"
+      >Testimonials</span
+    >
+    <p class="text-2xl xl:text-5xl text-paragraph-950 font-bold text-center">
+      What our customer say
+    </p>
+    <p
+      class="mt-4 md:mt-8 text-sm md:text-lg text-paragraph-500 text-center md:max-w-xl md:mx-auto"
+    >
+      Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim
+      placerat nisi, adipiscing mauris non purus parturient.
+    </p>
+  </div>
 
-    <!-- Contenedor del carrusel con overflow hidden -->
-    <div class="carousel-container overflow-hidden">
-      <!-- Contenedor de la grid que se moverá -->
-      <div class="carousel-track grid-container" id="testimonialTrack">
-        {
-          allTestimonials.map((testimonial) => (
-            <div class="grid-item">
-              <TestimonialCard {...testimonial} />
-            </div>
-          ))
-        }
-      </div>
+  <!-- Contenedor del carrusel con overflow hidden -->
+  <div class="carousel-container overflow-hidden">
+    <!-- Contenedor de la grid que se moverá -->
+    <div class="carousel-track grid-container" id="testimonialTrack">
+      {
+        allTestimonials.map((testimonial) => (
+          <div class="grid-item">
+            <TestimonialCard {...testimonial} />
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
