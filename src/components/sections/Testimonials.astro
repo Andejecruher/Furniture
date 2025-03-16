@@ -1,69 +1,162 @@
 ---
-import TestimonialCard from '../common/TestimonialCard.astro';
+import TestimonialCard from "../common/TestimonialCard.astro";
 
 const testimonials = [
   {
     id: 1,
-    name: 'María García',
-    role: 'Diseñadora de Interiores',
-    content: 'La calidad de los muebles es excepcional. He amueblado varios proyectos con productos de FurnitureStore y mis clientes siempre quedan encantados.',
-    image: '/placeholder.svg?height=100&width=100',
-    rating: 5
+    name: "María García",
+    role: "Diseñadora de Interiores",
+    content:
+      "La calidad de los muebles es excepcional. He amueblado varios proyectos con productos de FurnitureStore y mis clientes siempre quedan encantados.",
+    image: "https://i.pravatar.cc/300",
+    rating: 5,
   },
   {
     id: 2,
-    name: 'Carlos Rodríguez',
-    role: 'Cliente Verificado',
-    content: 'El servicio de entrega fue impecable y el sofá que compramos superó nuestras expectativas. Definitivamente volveremos a comprar aquí.',
-    image: '/placeholder.svg?height=100&width=100',
-    rating: 5
+    name: "Carlos Rodríguez",
+    role: "Cliente Verificado",
+    content:
+      "El servicio de entrega fue impecable y el sofá que compramos superó nuestras expectativas. Definitivamente volveremos a comprar aquí.",
+    image: "https://i.pravatar.cc/300",
+    rating: 5,
   },
   {
     id: 3,
-    name: 'Ana Martínez',
-    role: 'Arquitecta',
-    content: 'Lo que más me gusta es la atención al detalle en cada pieza. Se nota que hay un compromiso real con la calidad y el diseño.',
-    image: '/placeholder.svg?height=100&width=100',
-    rating: 4
-  }
+    name: "Ana Martínez",
+    role: "Arquitecta",
+    content:
+      "Lo que más me gusta es la atención al detalle en cada pieza. Se nota que hay un compromiso real con la calidad y el diseño.",
+    image: "https://i.pravatar.cc/300",
+    rating: 4,
+  },
 ];
+
+// Duplicar los testimonios para el efecto infinito
+const allTestimonials = [...testimonials, ...testimonials, ...testimonials];
 ---
 
-<section class="py-16 bg-white">
-  <div class="container mx-auto px-4">
+<section class="py-8 bg-white">
+  <div class="container mx-auto">
     <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold mb-4">Lo Que Dicen Nuestros Clientes</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">
-        Descubre por qué nuestros clientes confían en nosotros para crear sus espacios perfectos.
+      <span
+        class="text-sm md:text-lg text-secondary-300 font-semibold mb-2 ml-2 text-center block md:inline-block"
+        >Testimonials</span
+      >
+      <p class="text-2xl xl:text-5xl text-paragraph-950 font-bold text-center">
+        What our customer say
+      </p>
+      <p
+        class="mt-4 md:mt-8 text-sm md:text-lg text-paragraph-500 text-center md:max-w-xl md:mx-auto"
+      >
+        Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim
+        placerat nisi, adipiscing mauris non purus parturient.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {testimonials.map(testimonial => (
-        <TestimonialCard {...testimonial} />
-      ))}
-    </div>
-
-    <div class="text-center mt-12">
-      <a 
-        href="/testimonios" 
-        class="text-amber-600 hover:text-amber-700 font-semibold inline-flex items-center"
-      >
-        Ver Más Testimonios
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          class="h-5 w-5 ml-2" 
-          viewBox="0 0 20 20" 
-          fill="currentColor"
-        >
-          <path 
-            fill-rule="evenodd" 
-            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" 
-            clip-rule="evenodd" 
-          />
-        </svg>
-      </a>
+    <!-- Contenedor del carrusel con overflow hidden -->
+    <div class="carousel-container overflow-hidden">
+      <!-- Contenedor de la grid que se moverá -->
+      <div class="carousel-track grid-container" id="testimonialTrack">
+        {
+          allTestimonials.map((testimonial) => (
+            <div class="grid-item">
+              <TestimonialCard {...testimonial} />
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
 
+<style>
+  .carousel-container {
+    height: 310px;
+    width: 100%;
+    position: relative;
+  }
+
+  .carousel-track {
+    display: flex;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+  }
+
+  .grid-container {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .grid-item {
+    width: 100%;
+    min-width: 300px;
+    max-width: 400px;
+  }
+
+  /* Ajusta el ancho de los elementos según el tamaño de pantalla */
+  @media (min-width: 768px) {
+    .grid-item {
+      width: calc(50% - 1rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid-item {
+      width: calc(33.333% - 1.333rem);
+    }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(
+        calc(-300px * 3 - 6rem)
+      ); /* Ancho de 3 tarjetas + gaps */
+    }
+  }
+
+  /* Pausa la animación cuando el usuario pasa el cursor por encima */
+  .carousel-container:hover .carousel-track {
+    animation-play-state: paused;
+  }
+</style>
+
+<script>
+  // Script para manejar el carrusel infinito
+  document.addEventListener("DOMContentLoaded", () => {
+    const track = document.getElementById("testimonialTrack");
+    const testimonialCount = 3; // Número de testimonios originales
+
+    if (!track) return;
+
+    // Función para reiniciar la animación cuando termina
+    const handleAnimationEnd = () => {
+      track.style.animation = "none";
+      track.offsetHeight; // Trigger reflow
+      track.style.animation = "scroll 30s linear infinite";
+    };
+
+    // Calcular el ancho total de los elementos originales para el desplazamiento
+    const calculateScrollWidth = () => {
+      const items = track.querySelectorAll(".grid-item");
+      if (items.length === 0) return;
+
+      const itemWidth = (items[0] as HTMLElement).offsetWidth;
+      const gap = 16; // 1rem = 16px
+
+      // Actualizar la animación con el ancho correcto
+      document.documentElement.style.setProperty(
+        "--scroll-width",
+        `${-(itemWidth * testimonialCount + gap * (testimonialCount - 1))}px`
+      );
+    };
+
+    // Recalcular cuando cambia el tamaño de la ventana
+    window.addEventListener("resize", calculateScrollWidth);
+    calculateScrollWidth();
+
+    track.addEventListener("animationiteration", handleAnimationEnd);
+  });
+</script>
