@@ -1,11 +1,16 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import ProductCard from "../../components/furniture/ProductCard.astro";
-import ProductFilter from "../../components/furniture/ProductFilter.astro";
-import type { FurnitureProduct } from "../../types/furniture";
+import HeroSection from "@/components/sections/HeroSection.astro";
+import BannerProducts from "@/components/sections/BannerProducts.astro";
 ---
 
 <MainLayout
   title="Productos"
   description="Explora nuestra colección de muebles de alta calidad"
-/>
+>
+  <HeroSection
+    title="Products"
+    description="We display products based on the latest products we have, if you want to see our old products please enter the name of the item"
+  />
+  <BannerProducts />
+</MainLayout>

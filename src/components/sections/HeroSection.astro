@@ -1,0 +1,26 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+// Destructuramos las props con valores por defecto
+const { title, description } = Astro.props;
+---
+
+<section id="hero-section">
+  <div
+    class="container mx-auto text-center h-60 flex flex-col justify-center items-center"
+  >
+    <h1
+      class="text-2xl font-bold leading-[130%] tracking-[0.26px] text-black md:text-5xl"
+    >
+      {title}
+    </h1>
+    <p
+      class="text-sm font-medium leading-[180%] text-gray-500 max-w-96 md:text-lg md:max-w-xl"
+    >
+      {description}
+    </p>
+  </div>
+</section>

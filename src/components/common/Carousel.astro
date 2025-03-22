@@ -48,6 +48,7 @@ export interface Props {
   // Nueva propiedad para controlar el comportamiento de clic en slides
   disableSlideNavigation?: boolean; // Si es true, no navegará al hacer clic en un slide
   slideClickCallback?: string; // Nombre de la función global para manejar clics en slides
+  visible: "singular" | "multiple";
 }
 
 const {
@@ -78,6 +79,7 @@ const {
   peekAmount = 10,
   disableSlideNavigation = false,
   slideClickCallback = "",
+  visible,
 } = Astro.props;
 
 const containerClasses = [
@@ -100,7 +102,7 @@ const carouselClasses = ["astro-carousel", carouselClass]
 <div class={containerClasses} id={id} data-theme={theme}>
   <div class={carouselClasses}>
     <div
-      class="astro-carousel-track"
+      class="astro-carousel-track relative"
       role="region"
       aria-label="Carrusel de imágenes"
       tabindex="0"
@@ -223,9 +225,9 @@ const carouselClasses = ["astro-carousel", carouselClass]
     --carousel-text: #000000;
     --carousel-button-bg: rgba(255, 255, 255, 0.7);
     --carousel-button-hover: rgba(255, 255, 255, 0.9);
-    --carousel-button-active: rgba(255, 255, 255, 1);
-    --carousel-indicator-bg: rgba(255, 255, 255, 0.5);
-    --carousel-indicator-active: rgba(255, 255, 255, 1);
+    --carousel-button-active: rgb(86, 215, 195);
+    --carousel-indicator-bg: rgba(229, 218, 218, 0.5);
+    --carousel-indicator-active: rgb(86, 215, 195);
     --carousel-shadow: rgba(0, 0, 0, 0.1);
   }
 
@@ -385,10 +387,10 @@ const carouselClasses = ["astro-carousel", carouselClass]
   }
 
   .astro-carousel-indicator {
-    width: 10px;
-    height: 10px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    background-color: var(--carousel-indicator-bg);
+    background-color: #1a1a1a;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
@@ -400,7 +402,7 @@ const carouselClasses = ["astro-carousel", carouselClass]
   }
 
   .astro-carousel-indicator.active {
-    background-color: var(--carousel-indicator-active);
+    background-color: red;
     transform: scale(1.2);
   }
 
@@ -544,6 +546,7 @@ const carouselClasses = ["astro-carousel", carouselClass]
     parallaxIntensity,
     disableSlideNavigation,
     slideClickCallback,
+    visible,
   }}
 >
   document.addEventListener("DOMContentLoaded", () => {
@@ -562,7 +565,7 @@ const carouselClasses = ["astro-carousel", carouselClass]
     );
 
     // Variables para el control del carrusel
-    let visibleItems = 2;
+    let visibleItems = visible === "singular" ? 1 : 2;
     let isDragging = false;
     let isTransitioning = false;
     let startPos = 0;
@@ -889,7 +892,7 @@ const carouselClasses = ["astro-carousel", carouselClass]
     const handleResize = () => {
       const containerWidth = container.clientWidth;
       const newVisibleItems = containerWidth < 768 ? 1 : 2;
-      visibleItems = newVisibleItems;
+      visibleItems = visible === "singular" ? 1 : newVisibleItems;
       track.style.setProperty("--visibleItems", visibleItems);
       currentIndex = visibleItems;
       updateCarousel(currentIndex, false);

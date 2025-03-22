@@ -1,0 +1,79 @@
+---
+import Carousel from "@/components/common/Carousel.astro";
+import CarouselSlide from "@/components/common/CarouselSlide.astro";
+
+const products = [
+  {
+    title: "Ramadhan Sale Offer",
+    description: "Get 50% off on all products",
+    image:
+      "https://st5.depositphotos.com/2673929/72580/i/600/depositphotos_725806312-stock-photo-corner-view-office-interior-computers.jpg",
+    discount: "50%",
+  },
+  {
+    title: "New Collection",
+    description: "Get 20% off on all products",
+    image:
+      "https://st5.depositphotos.com/2673929/72580/i/600/depositphotos_725806312-stock-photo-corner-view-office-interior-computers.jpg",
+  },
+  {
+    title: "Summer Sale Offer",
+    description: "Get 30% off on all products",
+    image:
+      "https://st5.depositphotos.com/2673929/72580/i/600/depositphotos_725806312-stock-photo-corner-view-office-interior-computers.jpg",
+    discount: "30%",
+  },
+  {
+    title: "Winter Sale Offer",
+    description: "Get 40% off on all products",
+    image:
+      "https://st5.depositphotos.com/2673929/72580/i/600/depositphotos_725806312-stock-photo-corner-view-office-interior-computers.jpg",
+  },
+  {
+    title: "Spring Sale Offer",
+    description: "Get 60% off on all products",
+    image:
+      "https://st5.depositphotos.com/2673929/72580/i/600/depositphotos_725806312-stock-photo-corner-view-office-interior-computers.jpg",
+    discount: "60%",
+  },
+];
+---
+
+<section id="banner-products">
+  <Carousel
+    id="carousel-products"
+    indicatorPosition="bottom"
+    navigationPosition="split"
+    autoplay={true}
+    autoplaySpeed={2000}
+    peekAmount={0}
+    gap="0px"
+    visible="singular"
+    showThumbnails={false}
+  >
+    {
+      products.map((product, index) => (
+        <CarouselSlide>
+          <div class="w-full h-[180px] relative">
+            <img
+              src={product.image}
+              alt={product.title}
+              class="object-cover w-full h-full"
+            />
+            {product.discount && (
+              <div class="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded-md">
+                {product.discount} OFF
+              </div>
+            )}
+            <h3 class="text-lg font-semibold text-gray-800 mt-2 absolute bottom-2 left-2">
+              {product.title}
+            </h3>
+            <p class="text-sm text-gray-500 mt-1 absolute">
+              {product.description}
+            </p>
+          </div>
+        </CarouselSlide>
+      ))
+    }
+  </Carousel>
+</section>
